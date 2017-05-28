@@ -109,7 +109,7 @@ function callWatson(payload, sender) {
       if(convResults != null && convResults.output != null){
   			var i = 0;
   			while(i < convResults.output.text.length){
-  				sendMessage(sender, convResults.output.text[i++] + "\n" + JSON.stringify(conversationJson) );
+  				sendMessage(sender, convResults.output.text[i++] /*+ "\n" + JSON.stringify(conversationJson)*/ );
   			}
         if(end){
           console.log("Send to BackEnd");
