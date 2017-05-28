@@ -90,9 +90,9 @@ function callWatson(payload, sender) {
       if(convResults.context.action === 'set-inicio'){
         var dataromana = "";
         var hora = "";
-        var atArray = convResults.context.data.split[" at "];
+        var atArray = convResults.context.data.split(" at ");
         hora = atArray[1];
-        var dataarray = atArray[0].split["-"];
+        var dataarray = atArray[0].split("-");
         var dia = dataarray[2];
         var mes = dataarray[1];
         var ano = dataarray[0];
