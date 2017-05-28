@@ -81,20 +81,20 @@ function callWatson(payload, sender) {
       if(convResults.context.action === 'marcar-medico'){
         conversationJson.medico = convResults.context.medico;
       }
-      if(convResults.context.action === 'set-cpf'){
-        conversationJson.cpf = convResults.context.cpf;
-        end = true;
-      }
       if(convResults.context.action === 'set-bairro'){
         conversationJson.bairro = convResults.context.bairro;
-      }
-      if(convResults.context.action === 'set-inicio'){
-        conversationJson.data = convResults.context.data;
       }
       if(convResults.context.action === 'set-plano'){
         conversationJson.plano = convResults.context.plano;
       }
-      
+      if(convResults.context.action === 'set-inicio'){
+        conversationJson.data = convResults.context.data;
+      }
+      if(convResults.context.action === 'set-cpf'){
+        conversationJson.cpf = convResults.context.cpf;
+        end = true;
+      }
+
       console.log("conversationJson: ", conversationJson);
 
       if(convResults != null && convResults.output != null){
@@ -103,7 +103,7 @@ function callWatson(payload, sender) {
   				sendMessage(sender, convResults.output.text[i++] + "\n" + JSON.stringify(conversationJson) );
   			}
         if(end){
-          conversationJson = {};
+          console.log("Send to BackEnd");
         }
 		  }
     }
