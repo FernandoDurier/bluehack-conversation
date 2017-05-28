@@ -84,6 +84,12 @@ function callWatson(payload, sender) {
       if(convResults.context.action === 'set-bairro'){
         conversationJson.bairro = convResults.context.bairro;
       }
+      if(convResults.context.action === 'set-estado'){
+        conversationJson.estado = convResults.context.estado;
+      }
+      if(convResults.context.action === 'set-pais'){
+        conversationJson.pais = convResults.context.pais;
+      }
       if(convResults.context.action === 'set-plano'){
         conversationJson.plano = convResults.context.plano;
       }
