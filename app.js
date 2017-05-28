@@ -11,6 +11,8 @@ const usedCredHere = credentialsConstructor.getWorkspaceCredentials("bluehack");
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+var conversationJson = {};
+
 var conversation_id = "";
 var w_conversation = watson.conversation({
     url: 'https://gateway.watsonplatform.net/conversation/api',
@@ -66,21 +68,45 @@ app.post('/webhook/', function (req, res) {
     }
     res.sendStatus(200);
 });
-
+var end = false;
 function callWatson(payload, sender) {
 	w_conversation.message(payload, function (err, convResults) {
         if (err) {
             return responseToRequest.send("Erro.");
         }
 
-		if(convResults.context != null)
-    	   conversation_id = convResults.context.conversation_id;
-        if(convResults != null && convResults.output != null){
-			var i = 0;
-			while(i < convResults.output.text.length){
-				sendMessage(sender, convResults.output.text[i++]);
-			}
-		}
+		if(convResults.context != null){
+    	conversation_id = convResults.context.conversation_id;
+
+      if(convResults.context.action === 'marcar-medico'){
+        conversationJson.medico = convResults.context.medico;
+      }
+      if(convResults.context.action === 'set-cpf'){
+        conversationJson.cpf = convResults.context.cpf;
+        end = true;
+      }
+      if(convResults.context.action === 'set-bairro'){
+        conversationJson.bairro = convResults.context.bairro;
+      }
+      if(convResults.context.action === 'set-inicio'){
+        conversationJson.data = convResults.context.data;
+      }
+      if(convResults.context.action === 'set-plano'){
+        conversationJson.plano = convResults.context.plano;
+      }
+      
+      console.log("conversationJson: ", conversationJson);
+
+      if(convResults != null && convResults.output != null){
+  			var i = 0;
+  			while(i < convResults.output.text.length){
+  				sendMessage(sender, convResults.output.text[i++] + "\n" + JSON.stringify(conversationJson) );
+  			}
+        if(end){
+          conversationJson = {};
+        }
+		  }
+    }
 
     });
 }
