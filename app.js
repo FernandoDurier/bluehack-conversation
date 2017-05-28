@@ -88,7 +88,16 @@ function callWatson(payload, sender) {
         conversationJson.plano = convResults.context.plano;
       }
       if(convResults.context.action === 'set-inicio'){
-        conversationJson.data = convResults.context.data;
+        var dataromana = "";
+        var hora = "";
+        var atArray = convResults.context.data.split[" at "];
+        hora = atArray[1];
+        var dataarray = atArray[0].split["-"];
+        var dia = dataarray[2];
+        var mes = dataarray[1];
+        var ano = dataarray[0];
+        dataromana += dia+"/"+mes+"/"+ano;
+        conversationJson.data = dataromana + "-" + hora;
       }
       if(convResults.context.action === 'set-cpf'){
         conversationJson.cpf = convResults.context.cpf;
